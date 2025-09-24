@@ -46,10 +46,10 @@ The server has two endpoints:
 - `/api/insert_data`: Receives a POST request containing a single temperature data point with the following json structure:
     ```json
     {
-        timestamp: number,
-        data: number
+        "timestamp": 1758712352,
+        "data": 25
     }
-    ```.
+    ```
 
     When a data insertion was successful, the server returns a typical `200 OK`.
 
