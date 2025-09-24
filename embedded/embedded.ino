@@ -1,8 +1,8 @@
 #include "./WiFiCredentials.h"
 #include <DallasTemperature.h>
+#include <HTTPClient.h>
 #include <OneWire.h>
 #include <WiFi.h>
-#include <HTTPClient.h>
 
 #define ONE_WIRE_BUS 5
 #define MAXIMUM_WIFI_RETRIES 25
@@ -34,7 +34,7 @@ unsigned long getTime() {
   time_t now;
   struct tm timeinfo;
   if (!getLocalTime(&timeinfo)) {
-    //Serial.println("Failed to obtain time");
+    Serial.println("Failed to obtain time");
     return (0);
   }
   time(&now);
@@ -67,9 +67,11 @@ void loop() {
   http.begin(API_ENDPOINT);
   http.addHeader("Content-Type", "application/json");
 
-  String jsonData = "{ \"timestamp\": " + String(getTime()) + ", \"data\": " + String(temperature) + " }";
+  String jsonData = "{ \"timestamp\": " + String(getTime()) +
+                    ", \"data\": " + String(temperature) + " }";
   int httpResponseCode = http.POST(jsonData);
-  Serial.printf("%d (%s) : ", httpResponseCode, http.errorToString(httpResponseCode).c_str());
+  Serial.printf("%d (%s) : ", httpResponseCode,
+                http.errorToString(httpResponseCode).c_str());
   http.end();
 
   Serial.print(temperature);
