@@ -60,14 +60,21 @@ void loop() {
     return;
   }
 
+  unsigned long timestamp = getTime();
+  if (timestamp == 0) {
+    Serial.println("Couldn't get the current timestamp");
+    return;
+  }
+
   sensors.requestTemperatures();
   float temperature = sensors.getTempCByIndex(0);
 
   HTTPClient http;
   http.begin(API_ENDPOINT);
   http.addHeader("Content-Type", "application/json");
+  http.setTimeout(5000);
 
-  String jsonData = "{ \"timestamp\": " + String(getTime()) +
+  String jsonData = "{ \"timestamp\": " + String(timestamp) +
                     ", \"data\": " + String(temperature) + " }";
   int httpResponseCode = http.POST(jsonData);
   Serial.printf("%d (%s) : ", httpResponseCode,
