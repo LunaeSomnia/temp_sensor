@@ -96,6 +96,10 @@ This project is currently under development.
 
 Hardware, software architecture, and sensor selection are expected to change as development and experimentation continue.
 
+## AI Disclaimer
+
+No AI was used in the development of this project.
+
 ## License
 
 This project is licensed under the MIT License.
